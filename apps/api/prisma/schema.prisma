@@ -1,0 +1,138 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(cuid())
+  email          String   @unique
+  passwordHash   String
+  provider       String
+  createdAt      DateTime @default(now())
+  profile        Profile?
+  resumes        Resume[]
+  aiJobs         AIJob[]
+  applications   Application[]
+  subscriptions  Subscription[]
+  payments       Payment[]
+}
+
+model Profile {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
+  firstName String
+  lastName  String
+  title     String?
+  location  String?
+  links     Json?
+}
+
+model Resume {
+  id          String          @id @default(cuid())
+  user        User            @relation(fields: [userId], references: [id])
+  userId      String
+  title       String
+  language    String
+  templateKey String
+  isPublic    Boolean         @default(false)
+  publicSlug  String?         @unique
+  atsScore    Int?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  sections    ResumeSection[]
+}
+
+enum ResumeSectionType {
+  summary
+  experience
+  education
+  skills
+  projects
+  certs
+  languages
+  interests
+  refs
+}
+
+model ResumeSection {
+  id         String            @id @default(cuid())
+  resume     Resume            @relation(fields: [resumeId], references: [id])
+  resumeId   String
+  type       ResumeSectionType
+  orderIndex Int
+  content    Json
+}
+
+model AIJob {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  type       String
+  input      Json
+  output     Json?
+  targetPath String?
+  tokensUsed Int?
+  status     String
+  createdAt  DateTime @default(now())
+}
+
+model Template {
+  id          String @id @default(cuid())
+  key         String @unique
+  name        String
+  renderConfig Json
+  variants     Json
+}
+
+model Application {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  company   String
+  role      String
+  jdText    String?
+  status    String
+  createdAt DateTime @default(now())
+}
+
+enum SubscriptionStatus {
+  active
+  canceled
+  incomplete
+  past_due
+}
+
+enum SubscriptionProvider {
+  stripe
+  paypal
+}
+
+model Subscription {
+  id               String               @id @default(cuid())
+  user             User                 @relation(fields: [userId], references: [id])
+  userId           String
+  provider         SubscriptionProvider
+  status           SubscriptionStatus
+  customerId       String
+  priceId          String
+  currentPeriodEnd DateTime?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+}
+
+model Payment {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  provider   String
+  eventType  String
+  amountCents Int
+  currency   String
+  raw        Json
+  createdAt  DateTime @default(now())
+}

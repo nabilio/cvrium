@@ -1,0 +1,13 @@
+{
+  "apps": [
+    {
+      "name": "cvrum-web",
+      "script": "apps/api/dist/server.js",
+      "cwd": "/home/adminio/htdocs/cvrum.nrinfra",
+      "env": {
+        "PORT": 3008,
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}
