@@ -1,0 +1,31 @@
+name: Deploy to VPS
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ vars.VPS_HOST }}
+          username: ${{ vars.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+            APP_DIR="${{ vars.APP_DIR }}"
+            mkdir -p "$APP_DIR"
+            cd "$APP_DIR"
+            if [ ! -d .git ]; then
+              git init
+              git remote add origin https://github.com/${{ github.repository }}.git
+              git fetch origin main
+              git checkout -t origin/main
+            else
+              git fetch origin main
+              git reset --hard origin/main
+            fi
+            echo "🚀 Déploiement terminé."
