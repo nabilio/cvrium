@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply min-h-screen antialiased;
+}
+
+[data-theme='tech-minimal'] {
+  --template-primary: 15 118 110;
+  --template-accent: 39 100 60;
+}
+
+[data-theme='chrono-pro'] {
+  --template-primary: 37 99 235;
+  --template-accent: 79 70 229;
+}
+
+[data-theme='elegant-ats'] {
+  --template-primary: 112 26 117;
+  --template-accent: 190 24 93;
+}
+
+[data-theme='clean-modern'] {
+  --template-primary: 14 116 144;
+  --template-accent: 8 145 178;
+}
+
+[data-theme='compact-impact'] {
+  --template-primary: 180 83 9;
+  --template-accent: 217 70 239;
+}
+
+.resume-preview {
+  --color-primary: rgb(var(--template-primary));
+  --color-accent: rgb(var(--template-accent));
+}
+
+.resume-preview h2 {
+  @apply text-lg font-semibold text-slate-800;
+}
+
+.resume-preview p,
+.resume-preview li {
+  @apply text-sm leading-relaxed text-slate-700;
+}

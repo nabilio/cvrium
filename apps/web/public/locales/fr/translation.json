@@ -1,0 +1,95 @@
+{
+  "nav": {
+    "ariaLabel": "Navigation principale",
+    "dashboard": "Tableau de bord",
+    "pricing": "Tarifs",
+    "billing": "Facturation",
+    "admin": "Admin"
+  },
+  "auth": {
+    "loginTitle": "Connexion",
+    "loginSubtitle": "Accédez à votre espace CVRUM",
+    "email": "Email",
+    "password": "Mot de passe",
+    "loginCta": "Se connecter",
+    "loginWithGoogle": "Continuer avec Google",
+    "loginSuccess": "Connexion réussie",
+    "loginError": "Connexion impossible"
+  },
+  "dashboard": {
+    "title": "Vos CV",
+    "subtitle": "Gérez vos résumés professionnels et leurs variantes",
+    "createResume": "Créer un CV",
+    "newResumeTitle": "Nouveau CV",
+    "resumeCreated": "CV créé",
+    "resumeCreateError": "Impossible de créer le CV",
+    "templateLabel": "Template : {{template}}",
+    "lastUpdated": "Mis à jour le {{date}}",
+    "editResume": "Modifier"
+  },
+  "resumeEditor": {
+    "saved": "Modifications enregistrées",
+    "saveError": "Impossible d'enregistrer",
+    "exportDisabled": "L'export est réservé aux abonnés actifs",
+    "exportPdf": "Exporter PDF",
+    "templates": "Templates",
+    "templatesHint": "Changez instantanément la mise en page.",
+    "makePublic": "Activer le lien public",
+    "makePrivate": "Désactiver le lien public",
+    "atsScore": "Score ATS : {{score}}",
+    "sectionsAriaLabel": "Sections du CV",
+    "reorderSection": "Réordonner {{section}}",
+    "dragHandle": "Déplacer"
+  },
+  "ai": {
+    "title": "Assistant IA",
+    "subtitle": "Pré-remplissage intelligent et optimisation",
+    "promptLabel": "Décrire mon profil",
+    "prefillCta": "Pré-remplir",
+    "prefillSuccess": "Contenu généré",
+    "prefillError": "Erreur IA",
+    "loading": "Chargement..."
+  },
+  "publicResume": {
+    "qrAlt": "QR code de partage"
+  },
+  "pricing": {
+    "tagline": "Tout-en-un ATS",
+    "title": "Passez au niveau supérieur",
+    "subtitle": "Exports premium, IA illimitée, partage sécurisé.",
+    "perMonth": "Par mois, TTC",
+    "subscribeStripe": "S'abonner avec Stripe",
+    "subscribePaypal": "S'abonner avec PayPal",
+    "trial": "Essai gratuit 7 jours. Résiliable à tout moment.",
+    "features": {
+      "atsOptimized": "Templates optimisés ATS",
+      "unlimitedResumes": "CV et versions illimités",
+      "pdfDocx": "Exports PDF et DOCX",
+      "aiQuota": "Quota IA augmenté",
+      "publicLinks": "Liens publics protégés"
+    }
+  },
+  "billing": {
+    "title": "Facturation",
+    "subtitle": "Gérez votre abonnement CVRUM",
+    "currentPlan": "Abonnement actif",
+    "planDescription": "3 € / mois – exports premium, IA avancée",
+    "manageStripe": "Gérer via Stripe",
+    "managePaypal": "Gérer via PayPal",
+    "portalError": "Impossible d'ouvrir le portail",
+    "loading": "Chargement...",
+    "trialInfo": "L'essai gratuit de 7 jours est automatiquement appliqué."
+  },
+  "admin": {
+    "title": "Console d'administration",
+    "subtitle": "Gérez les templates et surveillez l'IA",
+    "templates": "Templates",
+    "aiLogs": "Logs IA",
+    "noTemplates": "Aucun template configuré",
+    "noLogs": "Pas encore d'exécution IA",
+    "logMeta": "{{tokens}} tokens – {{date}}"
+  },
+  "common": {
+    "loading": "Chargement..."
+  }
+}
