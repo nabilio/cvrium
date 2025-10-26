@@ -1,0 +1,95 @@
+{
+  "nav": {
+    "ariaLabel": "Main navigation",
+    "dashboard": "Dashboard",
+    "pricing": "Pricing",
+    "billing": "Billing",
+    "admin": "Admin"
+  },
+  "auth": {
+    "loginTitle": "Sign in",
+    "loginSubtitle": "Access your CVRUM workspace",
+    "email": "Email",
+    "password": "Password",
+    "loginCta": "Sign in",
+    "loginWithGoogle": "Continue with Google",
+    "loginSuccess": "Signed in successfully",
+    "loginError": "Sign-in failed"
+  },
+  "dashboard": {
+    "title": "Your resumes",
+    "subtitle": "Manage professional resumes and their variants",
+    "createResume": "Create resume",
+    "newResumeTitle": "New resume",
+    "resumeCreated": "Resume created",
+    "resumeCreateError": "Unable to create resume",
+    "templateLabel": "Template: {{template}}",
+    "lastUpdated": "Updated {{date}}",
+    "editResume": "Edit"
+  },
+  "resumeEditor": {
+    "saved": "Changes saved",
+    "saveError": "Unable to save",
+    "exportDisabled": "Export is reserved for active subscribers",
+    "exportPdf": "Export PDF",
+    "templates": "Templates",
+    "templatesHint": "Switch layout instantly.",
+    "makePublic": "Activate public link",
+    "makePrivate": "Disable public link",
+    "atsScore": "ATS score: {{score}}",
+    "sectionsAriaLabel": "Resume sections",
+    "reorderSection": "Reorder {{section}}",
+    "dragHandle": "Drag"
+  },
+  "ai": {
+    "title": "AI assistant",
+    "subtitle": "Smart prefill and optimization",
+    "promptLabel": "Describe my profile",
+    "prefillCta": "Prefill",
+    "prefillSuccess": "Content generated",
+    "prefillError": "AI error",
+    "loading": "Loading..."
+  },
+  "publicResume": {
+    "qrAlt": "Share QR code"
+  },
+  "pricing": {
+    "tagline": "All-in-one ATS",
+    "title": "Level up your applications",
+    "subtitle": "Premium exports, unlimited AI, secure sharing.",
+    "perMonth": "Per month, VAT incl.",
+    "subscribeStripe": "Subscribe with Stripe",
+    "subscribePaypal": "Subscribe with PayPal",
+    "trial": "7-day free trial. Cancel anytime.",
+    "features": {
+      "atsOptimized": "ATS-optimised templates",
+      "unlimitedResumes": "Unlimited resumes & versions",
+      "pdfDocx": "PDF & DOCX exports",
+      "aiQuota": "Increased AI quota",
+      "publicLinks": "Protected public links"
+    }
+  },
+  "billing": {
+    "title": "Billing",
+    "subtitle": "Manage your CVRUM subscription",
+    "currentPlan": "Active subscription",
+    "planDescription": "€3 / month – premium exports, advanced AI",
+    "manageStripe": "Manage via Stripe",
+    "managePaypal": "Manage via PayPal",
+    "portalError": "Unable to open portal",
+    "loading": "Loading...",
+    "trialInfo": "The 7-day free trial is applied automatically."
+  },
+  "admin": {
+    "title": "Admin console",
+    "subtitle": "Manage templates and monitor AI",
+    "templates": "Templates",
+    "aiLogs": "AI logs",
+    "noTemplates": "No templates configured",
+    "noLogs": "No AI runs yet",
+    "logMeta": "{{tokens}} tokens – {{date}}"
+  },
+  "common": {
+    "loading": "Loading..."
+  }
+}
