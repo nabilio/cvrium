@@ -1,0 +1,8 @@
+## Pages
+- [Aperçu CV -](/cvpreview): No description available
+- [Connexion - CV Generator Pro](/login): Connectez-vous à votre compte CV Generator Pro
+- [Dashboard - CV Generator Pro](/dashboard): Gérez tous vos CV professionnels
+- [Inscription - CV Generator Pro](/register): Créez votre compte CV Generator Pro gratuitement
+- [Optimisation IA -](/aioptimizer): Optimisez votre CV avec l
+- [Recommandations - CV Generator Pro](/recommendations): Gérez vos demandes de recommandations professionnelles
+- [un CV - CV Generator Pro](/cveditor): Créez ou modifiez votre CV professionnel
