@@ -1,10 +1,9 @@
 /**
- * Shim côté frontend — pas de clé ici.
- * Redirige vers le backend local /api/ai (géré par server/index.js)
+ * Shim frontend: aucun secret ici.
+ * Proxie l'appel vers le backend /api/ai (server/index.js).
  */
 
 export async function askAI(promptOrMessages) {
-  // Compat: accepte string ou tableau de messages
   const prompt = Array.isArray(promptOrMessages)
     ? JSON.stringify(promptOrMessages)
     : String(promptOrMessages || '');
@@ -19,14 +18,17 @@ export async function askAI(promptOrMessages) {
     const text = await res.text().catch(() => '');
     throw new Error(`AI API error: ${res.status} ${text}`);
   }
-
-  const data = await res.json();
-  return data;
+  return await res.json();
 }
 
-// Exporte aussi un nom "chat" pour compat avec d'anciens imports éventuels
-export async function chat(promptOrMessages) {
-  return askAI(promptOrMessages);
+/* Compatibilité avec l'ancien code */
+export async function callOpenAI(payload) {
+  return askAI(payload);
 }
 
-export default { askAI, chat };
+export async function chat(payload) {
+  return askAI(payload);
+}
+
+/* Export par défaut pratique */
+export default { callOpenAI, askAI, chat };
