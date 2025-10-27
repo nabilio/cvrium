@@ -1,0 +1,57 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install deps (frontend)
+        run: npm ci
+
+      - name: Build (Vite)
+        run: npm run build
+
+      - name: Prepare SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "${{ vars.VPS_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Upload frontend (dist)
+        run: |
+          RSYNC_RSH="ssh -i ~/.ssh/id_ed25519"
+          rsync -az --delete dist/ \
+            "${{ vars.VPS_USER }}@${{ vars.VPS_HOST }}:${{ vars.REMOTE_PATH }}"
+
+      - name: Upload backend (server)
+        run: |
+          RSYNC_RSH="ssh -i ~/.ssh/id_ed25519"
+          rsync -az --delete --exclude ".env" server/ \
+            "${{ vars.VPS_USER }}@${{ vars.VPS_HOST }}:${{ vars.SERVER_PATH }}"
+
+      - name: Install deps & restart API
+        run: |
+          ssh -i ~/.ssh/id_ed25519 \
+            "${{ vars.VPS_USER }}@${{ vars.VPS_HOST }}" \
+            "cd '${{ vars.SERVER_PATH }}' && npm i --omit=dev && \
+             pm2 reload cvrium-api || pm2 start index.js --name cvrium-api && pm2 save"
+
+      - name: Fix permissions (best effort)
+        run: |
+          ssh -i ~/.ssh/id_ed25519 \
+            "${{ vars.VPS_USER }}@${{ vars.VPS_HOST }}" \
+            "find '${{ vars.REMOTE_PATH }}' -type d -exec chmod 755 {} \; && \
+             find '${{ vars.REMOTE_PATH }}' -type f -exec chmod 644 {} \;"
