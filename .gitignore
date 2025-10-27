@@ -9,6 +9,5 @@ yarn-error.log
 pnpm-lock.yaml
 coverage/
 
-src/lib/openai.js
 .env
 .env.*
