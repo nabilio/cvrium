@@ -3,29 +3,42 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          host: ${{ vars.VPS_HOST }}
-          username: ${{ vars.VPS_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            set -e
-            APP_DIR="${{ vars.APP_DIR }}"
-            mkdir -p "$APP_DIR"
-            cd "$APP_DIR"
-            if [ ! -d .git ]; then
-              git init
-              git remote add origin https://github.com/${{ github.repository }}.git
-              git fetch origin main
-              git checkout -t origin/main
-            else
-              git fetch origin main
-              git reset --hard origin/main
-            fi
-            echo "🚀 Déploiement terminé."
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build (Vite)
+        run: npm run build
+
+      - name: Prepare SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "${{ vars.VPS_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Upload dist via rsync
+        run: |
+          RSYNC_RSH="ssh -i ~/.ssh/id_ed25519"
+          rsync -az --delete \
+            dist/ \
+            "${{ vars.VPS_USER }}@${{ vars.VPS_HOST }}:${{ vars.REMOTE_PATH || '/home/cvrum/htdocs/cvrum.nrinfra/dist/' }}"
+
+      - name: Fix permissions (best effort)
+        run: |
+          ssh -i ~/.ssh/id_ed25519 \
+            "${{ vars.VPS_USER }}@${{ vars.VPS_HOST }}" \
+            "find /home/cvrum/htdocs/cvrum.nrinfra/dist -type d -exec chmod 755 {} \; && \
+             find /home/cvrum/htdocs/cvrum.nrinfra/dist -type f -exec chmod 644 {} \;"
