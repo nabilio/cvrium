@@ -12,6 +12,17 @@ const LandingPage = ({ user }) => {
         <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-fuchsia-400 opacity-20 blur-[100px]"></div>
       </div>
 
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: 'easeInOut' }}
+        className="absolute top-10 left-1/2 -translate-x-1/2 flex items-center justify-center"
+      >
+        <div className="h-16 w-16 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-fuchsia-500 shadow-lg flex items-center justify-center text-white text-2xl font-extrabold tracking-widest">
+          NR
+        </div>
+      </motion.div>
+
       <motion.main
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
