@@ -18,7 +18,20 @@ export async function askAI(promptOrMessages) {
     const text = await res.text().catch(() => '');
     throw new Error(`AI API error: ${res.status} ${text}`);
   }
-  return await res.json();
+
+  const data = await res.json();
+
+  if (data?.error) {
+    throw new Error(data.error?.message || 'AI API error');
+  }
+
+  const message = data?.choices?.[0]?.message?.content ?? data?.choices?.[0]?.text;
+
+  if (typeof message === 'string') {
+    return message.trim();
+  }
+
+  return JSON.stringify(data);
 }
 
 /* Compatibilité avec l'ancien code */

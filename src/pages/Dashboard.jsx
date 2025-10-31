@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { Plus, FileText, LogOut, Sparkles, Eye, Edit, Trash2, Globe, Shield } from 'lucide-react';
+import { Plus, FileText, LogOut, Sparkles, Eye, Edit, Trash2, Globe, Shield, LayoutTemplate } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import DashboardLayout from '@/components/DashboardLayout';
+import { CV_TEMPLATE_LIST } from '@/components/cv-templates';
 
 const Dashboard = ({ user, onLogout }) => {
   const navigate = useNavigate();
@@ -16,6 +17,10 @@ const Dashboard = ({ user, onLogout }) => {
     const storedCvs = JSON.parse(localStorage.getItem(`cvs_${user.id}`) || '[]');
     setCvs(storedCvs);
   }, [user.id]);
+
+  const getTemplateName = (templateId) => {
+    return CV_TEMPLATE_LIST.find(template => template.id === templateId)?.name || 'Moderne vibrant';
+  };
 
   const handleDeleteCV = (cvId) => {
     const updatedCvs = cvs.filter(cv => cv.id !== cvId);
@@ -63,8 +68,19 @@ const Dashboard = ({ user, onLogout }) => {
               className="glass-effect p-6 rounded-2xl hover:bg-white/10 transition-all group"
             >
               <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-1">{cv.title}</h3>
+                <div className="flex-1 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-xl font-bold">{cv.title}</h3>
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-[11px] uppercase tracking-widest ${
+                        cv.status === 'draft'
+                          ? 'bg-amber-500/20 text-amber-300 border border-amber-400/30'
+                          : 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/30'
+                      }`}
+                    >
+                      {cv.status === 'draft' ? 'Brouillon' : 'Publié'}
+                    </span>
+                  </div>
                   <p className="text-sm text-gray-400">
                     Modifié le {new Date(cv.updatedAt).toLocaleDateString('fr-FR')}
                   </p>
@@ -88,6 +104,9 @@ const Dashboard = ({ user, onLogout }) => {
                     <Shield className="w-3 h-3" /> Anonyme
                   </span>
                 )}
+                <span className="px-2 py-1 bg-white/10 text-gray-200 rounded text-xs flex items-center gap-1">
+                  <LayoutTemplate className="w-3 h-3" /> {getTemplateName(cv.templateId)}
+                </span>
               </div>
 
               <div className="flex gap-2">
