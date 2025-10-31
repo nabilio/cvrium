@@ -150,6 +150,10 @@ export async function askAI(input, requestOverrides) {
     return text.trim();
   }
 
+  if (typeof data === 'string') {
+    return data;
+  }
+
   return JSON.stringify(data);
 }
 
