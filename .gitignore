@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.tmp/
+.cache/
+logs/
+*.log
+.env
+.env.*
+.DS_Store
+.vscode/
+backups/
+tmp/
