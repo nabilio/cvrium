@@ -25,6 +25,7 @@ jobs:
           source: "dist/*"
           target: "${{ vars.APP_DIR }}/dist"
           strip_components: 1
+          tar_exec: "tar --no-same-owner --no-same-permissions"
       - name: Finalize on VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
