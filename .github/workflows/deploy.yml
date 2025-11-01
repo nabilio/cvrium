@@ -1,4 +1,4 @@
-name: Deploy to VPS
+name: Deploy (build & upload)
 on:
   push:
     branches: ["main"]
@@ -8,7 +8,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Deploy via SSH
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install & Build
+        run: |
+          set -e
+          npm ci || npm install
+          npm run build
+      - name: Upload dist to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ vars.VPS_HOST }}
+          username: ${{ vars.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "dist/*"
+          target: "${{ vars.APP_DIR }}/dist"
+          strip_components: 1
+      - name: Finalize on VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ vars.VPS_HOST }}
@@ -17,15 +34,5 @@ jobs:
           script: |
             set -e
             APP_DIR="${{ vars.APP_DIR }}"
-            mkdir -p "$APP_DIR"
-            cd "$APP_DIR"
-            if [ ! -d .git ]; then
-              git init
-              git remote add origin https://github.com/${{ github.repository }}.git
-              git fetch origin main
-              git checkout -t origin/main
-            else
-              git fetch origin main
-              git reset --hard origin/main
-            fi
+            mkdir -p "$APP_DIR/dist"
             echo "🚀 Déploiement terminé."
